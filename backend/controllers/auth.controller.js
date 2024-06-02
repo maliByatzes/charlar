@@ -47,35 +47,40 @@ export const registerHandler = async (req, res) => {
     }
 
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error in registerHandler: ${error}`);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 export const loginHandler = async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
-  const isMatch = await argon2.verify(user.password, password);
+    const user = await User.findOne({ email });
+    const isMatch = await argon2.verify(user.password, password);
 
-  if (!user || !isMatch) {
-    return res.status(401).json({ error: "Invalid email or password" });
+    if (!user || !isMatch) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    await Promise.all([
+      generateAccessToken(user._id, res),
+      generateRefreshToken(user._id, res)
+    ]);
+
+    return res.status(200).json({
+      _id: user._id,
+      email: user.email,
+      username: user.username,
+      gender: user.gender,
+      profilePic: user.profilePic,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
+    });
+  } catch (error) {
+    logger.error(`Error in loginHandler: ${error}`);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-
-  await Promise.all([
-    generateAccessToken(user._id, res),
-    generateRefreshToken(user._id, res)
-  ]);
-
-  return res.status(200).json({
-    _id: user._id,
-    email: user.email,
-    username: user.username,
-    gender: user.gender,
-    profilePic: user.profilePic,
-    createdAt: user.createdAt,
-    updatedAt: user.updatedAt
-  });
 };
 
 export const logoutHandler = async (req, res) => {
@@ -84,7 +89,7 @@ export const logoutHandler = async (req, res) => {
     res.clearCookie('refresh_token');
     res.status(200).json({ message: 'success' });
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error in logoutHandler: ${error}`);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -113,7 +118,7 @@ export const refreshTokenHandler = async (req, res) => {
 
     return res.status(200).json({ message: 'success' });
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error in refreshTokenHandler: ${error}`);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

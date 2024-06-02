@@ -29,7 +29,7 @@ export const sendRequestHandler = async (req, res) => {
       return res.status(400).json({ error: "Failed to send request" });
     }
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error in sendRequestHandler: ${error}`);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -44,7 +44,7 @@ export const getSentRequests = async (req, res) => {
     return res.status(200).json(requests);
 
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error in getSentRequests: ${error}`);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -59,7 +59,7 @@ export const getReceivedRequests = async (req, res) => {
     return res.status(200).json(requests);
 
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error in getReceivedRequests: ${error}`);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -88,7 +88,7 @@ export const updateRequestHandler = async (req, res) => {
     }
 
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error in updateRequestHandler: ${error}`);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -112,7 +112,7 @@ export const cancelRequestHandler = async (req, res) => {
     }
 
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error in cancelRequestHandler: ${error}`);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
