@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import { generateAndSetToken } from "../utils/generateTokens.js";
 import logger from "../utils/logger.js";
 import * as argon2 from 'argon2';
 
@@ -63,7 +64,7 @@ export const loginHandler = async (req, res) => {
     return res.status(401).json({ error: "Invalid email or password" });
   }
 
-  // generate access token and refresh token
+  await generateAndSetToken(user._id, res);
 
   return res.status(200).json({
     _id: user._id,
