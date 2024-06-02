@@ -1,7 +1,8 @@
 import User from "../models/user.model.js";
+import { verifyToken } from "../utils/generateTokens.js";
 import logger from "../utils/logger.js";
 
-export const protectRoute = (req, res, next) => {
+export const protectRoute = async (req, res, next) => {
   try {
     let access_token;
 
@@ -18,7 +19,7 @@ export const protectRoute = (req, res, next) => {
       return res.status(401).json({ error: "Unauthorized - No access token" });
     }
 
-    const userId = jwt.verifyToken(access_token);
+    const userId = await verifyToken(access_token);
 
     if (!userId) {
       return res.status(401).json({ error: "Unauthorized - Invalid access token" });
