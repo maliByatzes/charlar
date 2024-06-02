@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-import { generateAndSetToken } from "../utils/generateTokens.js";
+import { generateAccessToken, generateRefreshToken, verifyToken } from "../utils/generateTokens.js";
 import logger from "../utils/logger.js";
 import * as argon2 from 'argon2';
 
@@ -52,8 +52,6 @@ export const registerHandler = async (req, res) => {
   }
 };
 
-// Login Handler
-
 export const loginHandler = async (req, res) => {
   const { email, password } = req.body;
 
@@ -64,7 +62,10 @@ export const loginHandler = async (req, res) => {
     return res.status(401).json({ error: "Invalid email or password" });
   }
 
-  await generateAndSetToken(user._id, res);
+  await Promise.all([
+    generateAccessToken(user._id, res),
+    generateRefreshToken(user._id, res)
+  ]);
 
   return res.status(200).json({
     _id: user._id,
@@ -80,11 +81,41 @@ export const loginHandler = async (req, res) => {
 // Logout Handler
 
 export const logoutHandler = async (req, res) => {
-  res.send('Logout Handler');
+  try {
+    res.clearCookie('access_token');
+    res.clearCookie('refresh_token');
+    res.status(200).json({ message: 'success' });
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
 
-// Refresh Token Handler
-
 export const refreshTokenHandler = async (req, res) => {
-  res.send('Refresh Token Handler');
+  try {
+    const refreshToken = req.cookies.refresh_token;
+
+    if (!refreshToken) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    const userId = await verifyToken(refreshToken);
+
+    if (!userId) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    await generateAccessToken(user._id, res);
+
+    return res.status(200).json({ message: 'success' });
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
