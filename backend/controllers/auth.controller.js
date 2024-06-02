@@ -78,8 +78,6 @@ export const loginHandler = async (req, res) => {
   });
 };
 
-// Logout Handler
-
 export const logoutHandler = async (req, res) => {
   try {
     res.clearCookie('access_token');
@@ -96,19 +94,19 @@ export const refreshTokenHandler = async (req, res) => {
     const refreshToken = req.cookies.refresh_token;
 
     if (!refreshToken) {
-      return res.status(403).json({ error: "Unauthorized" });
+      return res.status(403).json({ error: "Unauthorized - No access token" });
     }
 
     const userId = await verifyToken(refreshToken);
 
     if (!userId) {
-      return res.status(403).json({ error: "Unauthorized" });
+      return res.status(403).json({ error: "Unauthorized - Invalid access token" });
     }
 
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(403).json({ error: "Unauthorized" });
+      return res.status(403).json({ error: "Unauthorized - Invalid user" });
     }
 
     await generateAccessToken(user._id, res);
