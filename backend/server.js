@@ -4,8 +4,10 @@ import pino from 'pino-http';
 import cookieParser from 'cookie-parser';
 
 import connectToMongoDB from './db/connectToMongoDB.js';
-import authRoutes from './routes/auth.routes.js';
 import logger from './utils/logger.js';
+
+import authRoutes from './routes/auth.routes.js';
+import requestRoutes from './routes/request.routes.js';
 
 dotenv.config();
 const app = express();
@@ -17,6 +19,7 @@ app.use(pino());
 app.use(cookieParser());
 
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/requests', requestRoutes);
 
 app.all('*', (req, res) => {
   res.status(404).json({ message: `Route ${req.originalUrl} not found` });
