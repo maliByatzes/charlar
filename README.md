@@ -1,3 +1,3 @@
 # Charlar
 
-A chatting application built using MERN stack.
+A chat application built using MERN stack.
