@@ -7,10 +7,7 @@ export const getFriendsHandler = async (req, res) => {
 
     const friends = await Friend.find({
       $or: [{ user1: user._id }, { user2: user._id }]
-    }).populate([
-      { path: 'user1', match: { _id: { $ne: user._id } } },
-      { path: 'user2', match: { _id: { $ne: user._id } } }
-    ]);
+    }).populate(["user1", "user2"]);
 
     return res.status(200).json(friends);
 

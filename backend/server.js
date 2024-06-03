@@ -10,6 +10,7 @@ import authRoutes from './routes/auth.routes.js';
 import requestRoutes from './routes/request.routes.js';
 import userRoutes from './routes/user.routes.js';
 import friendRoutes from './routes/friend.routes.js';
+import messageRoutes from './routes/message.routes.js';
 
 dotenv.config();
 const app = express();
@@ -27,6 +28,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/requests', requestRoutes);
 app.use('/api/v1/friends', friendRoutes);
+app.use('/api/v1/messages', messageRoutes);
 
 app.all('*', (req, res) => {
   res.status(404).json({ message: `Route ${req.originalUrl} not found` });
