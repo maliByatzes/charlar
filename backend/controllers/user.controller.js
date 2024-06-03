@@ -15,9 +15,7 @@ export const getUser = async (req, res) => {
 export const getOtherUsers = async (req, res) => {
   try {
     const user = res.locals.user;
-
-    const otherUsers = await User.findById({ _id: { $ne: user._id } }).select("password");
-
+    const otherUsers = await User.find({ _id: { $ne: user._id } }).select("-password");
     res.status(200).json(otherUsers);
   } catch (error) {
     logger.error(`Error in getOtherUsers handler: ${error}`);

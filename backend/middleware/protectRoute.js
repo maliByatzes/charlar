@@ -25,7 +25,7 @@ export const protectRoute = async (req, res, next) => {
       return res.status(401).json({ error: "Unauthorized - Invalid access token" });
     }
 
-    const user = User.findById(userId).select("-password");
+    const user = await User.findById({ _id: userId }).select('-password');
 
     if (!user) {
       return res.status(401).json({ error: "Unauthorized - Invalid user" });

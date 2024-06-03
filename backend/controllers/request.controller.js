@@ -1,5 +1,6 @@
 import logger from "../utils/logger.js";
 import Request from '../models/request.model.js';
+import Friend from "../models/friend.model.js";
 
 export const sendRequestHandler = async (req, res) => {
   try {
@@ -14,7 +15,13 @@ export const sendRequestHandler = async (req, res) => {
     const existingRequest = await Request.findOne({ senderId: user._id, receiverId });
 
     if (existingRequest) {
-      return res.status(400).json({ error: "Request already sent" });
+      return res.status(400).json({ error: "Request already exists" });
+    }
+
+    const existingRequest2 = await Request.findOne({ senderId: receiverId, receiverId: user._id });
+
+    if (existingRequest2) {
+      return res.status(400).json({ error: "Request already exists" });
     }
 
     const newRequest = new Request({
@@ -26,7 +33,7 @@ export const sendRequestHandler = async (req, res) => {
       await newRequest.save();
       return res.status(200).json(newRequest);
     } else {
-      return res.status(400).json({ error: "Failed to send request" });
+      return res.status(400).json({ error: "Invalid request data" });
     }
   } catch (error) {
     logger.error(`Error in sendRequestHandler: ${error}`);
@@ -35,6 +42,7 @@ export const sendRequestHandler = async (req, res) => {
 };
 
 export const getSentRequests = async (req, res) => {
+  // TODO: implement pagination
   try {
 
     const user = res.locals.user;
@@ -50,6 +58,7 @@ export const getSentRequests = async (req, res) => {
 };
 
 export const getReceivedRequests = async (req, res) => {
+  // TODO: implement pagination
   try {
 
     const user = res.locals.user;
@@ -77,12 +86,19 @@ export const updateRequestHandler = async (req, res) => {
     }
 
     if (decision === "accept") {
-      // update request, status ==> accepted
-      // add the sender id to friens table
-      // remove the request from the table
+      const newFriend = new Friend({
+        user1: user._id,
+        user2: request.senderId
+      });
+      newFriend.save();
+
+      await Request.deleteOne({ _id: id });
+
+      return res.status(200).json({ message: "Friend request accepted" });
     } else if (decision === "decline") {
-      // update request, status ==> declined
-      // remove request from the table
+      await Request.deleteOne({ _id: id });
+
+      return res.status(200).json({ message: "Friend request declined" });
     } else {
       return res.status(400).json({ error: "Invalid data" });
     }
@@ -105,8 +121,8 @@ export const cancelRequestHandler = async (req, res) => {
     }
 
     if (request.status === "pending") {
-      // update request, status ==> cancelled
-      // remove the request from the Request table
+      await Request.deleteOne({ _id: id });
+      return res.status(200).json({ message: "Request canceled" });
     } else {
       return res.status(401).json({ error: "Request is not pending" });
     }

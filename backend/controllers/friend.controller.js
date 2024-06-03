@@ -5,8 +5,12 @@ export const getFriendsHandler = async (req, res) => {
   try {
     const user = res.locals.user;
 
-    // return the whole user2 instead of id
-    const friends = await Friend.find({ user1: user. _id });
+    const friends = await Friend.find({
+      $or: [{ user1: user._id }, { user2: user._id }]
+    }).populate([
+      { path: 'user1', match: { _id: { $ne: user._id } } },
+      { path: 'user2', match: { _id: { $ne: user._id } } }
+    ]);
 
     return res.status(200).json(friends);
 
@@ -21,13 +25,14 @@ export const removeOneFriendHandler = async (req, res) => {
     const { id } = req.params;
     const user = res.locals.user;
 
-    const friend = await Friend.findOne({ user1: user._id, user2: id });
+    const friend = await Friend.findOne({ _id: id, $or: [{ user1: user._id }, { user2: user._id }] });
 
     if (!friend) {
       return res.status(404).json({ error: `Friend with id ${id} not found` });
     }
 
-    // delete the friend
+    await Friend.deleteOne({ _id: friend._id });
+    return res.status(200).json({ message: "Friend removed successfully" });
   } catch (error) {
     logger.error(`Error in removeOneFriendHandler: ${error}`);
     res.status(500).json({ error: "Internal Server Error" });
