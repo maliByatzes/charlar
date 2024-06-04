@@ -10,7 +10,7 @@ const Sidebar = () => {
         <TabsTrigger value="friends">Friends</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="chats">
+      <TabsContent value="chats" className="overflow-auto h-[550px]">
         <Chats />
       </TabsContent>
 

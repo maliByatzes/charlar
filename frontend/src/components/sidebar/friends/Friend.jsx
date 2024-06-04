@@ -1,31 +1,22 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import Friends from "./Friends";
+import Requests from "./Requests";
 
 const Friend = () => {
+  const hasFriends = false;
+  const hasRequests = false;
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Password</CardTitle>
-        <CardDescription>
-          Change your password here. After saving, you'll be logged out.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        <div className="space-y-1">
-          <Label htmlFor="current">Current password</Label>
-          <Input id="current" type="password" />
-        </div>
-        <div className="space-y-1">
-          <Label htmlFor="new">New password</Label>
-          <Input id="new" type="password" />
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button>Save password</Button>
-      </CardFooter>
-    </Card>
+    <div className="flex flex-col">
+      {hasFriends ? (
+        <Friends class="flex-1" />
+      ) : <p className="text-center">No friends</p>}
+      <Separator className="my-6" />
+      <h1 className="font-semibold text-center text-lg underline mb-3">Friend requests</h1>
+      {hasRequests ? (
+        <Requests class="flex-1" />
+      ) : <p className="text-center">No friend requests</p>}
+    </div>
   );
 };
 
