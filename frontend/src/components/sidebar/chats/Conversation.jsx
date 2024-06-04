@@ -5,7 +5,7 @@ const Conversation = () => {
     <div className="flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer hover:bg-[#27272a]">
       <Avatar>
         <AvatarImage src="" />
-        <AvatarFallback>MZ</AvatarFallback>
+        <AvatarFallback>JD</AvatarFallback>
       </Avatar>
 
       <div className="flex">

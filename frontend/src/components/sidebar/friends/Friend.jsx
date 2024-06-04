@@ -3,8 +3,8 @@ import Friends from "./Friends";
 import Requests from "./Requests";
 
 const Friend = () => {
-  const hasFriends = false;
-  const hasRequests = false;
+  const hasFriends = true;
+  const hasRequests = true;
 
   return (
     <div className="flex flex-col">
