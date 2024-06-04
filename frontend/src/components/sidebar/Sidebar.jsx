@@ -18,8 +18,11 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area";
+import useLogout from "@/src/hooks/useLogout";
 
 const Sidebar = () => {
+  const { laoding, logout } = useLogout();
+
   return (
     <div className="flex flex-col gap-4 w-[350px]">
       <Tabs defaultValue="chats" className="">
@@ -53,7 +56,7 @@ const Sidebar = () => {
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="cursor-pointer">
-                <LogOut className="mr-2 h-4 w-4" />
+                <LogOut className="mr-2 h-4 w-4" onClick={logout} />
                 <span>Log out</span>
                 <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
               </DropdownMenuItem>

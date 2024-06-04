@@ -4,8 +4,9 @@ import { Label } from "@/components/ui/label";
 import GenderCheckbox from "./GenderCheckbox";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useRegister from "@/src/hooks/useRegister";
 
-const SignUp = () => {
+const Register = () => {
 
   const [inputs, setInputs] = useState({
     email: "",
@@ -15,7 +16,7 @@ const SignUp = () => {
     gender: "",
   });
 
-  // useSignup here...
+  const { loading, register } = useRegister();
 
   const handleCheckboxChange = (gender) => {
     setInputs({ ...inputs, gender });
@@ -23,8 +24,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-    // call signup method here
+    await register(inputs);
   };
 
   return (
@@ -75,7 +75,7 @@ const SignUp = () => {
         <GenderCheckbox onCheckboxChange={handleCheckboxChange} selectedGender={inputs.gender} />
 
         <Link to={"/login"} className="text-sm hover:underline inline-block">
-          Already have an account?
+          {"Already have an account?"}
         </Link>
 
         {/* Remember to set the loading animation */}
@@ -85,4 +85,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Register;

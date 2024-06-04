@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label"
 
 const GenderCheckbox = ({ onCheckboxChange, selectedGender }) => {
+  // TODO: style the radio buttons
   return (
     <div className="flex gap-3">
       <div className="flex items-center space-x-2">
