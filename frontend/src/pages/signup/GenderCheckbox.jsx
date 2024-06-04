@@ -1,12 +1,30 @@
-import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label"
 
-const GenderCheckbox = () => {
+const GenderCheckbox = ({ onCheckboxChange, selectedGender }) => {
   return (
     <div className="flex gap-3">
-      <Checkbox id="male" />
-      <label htmlFor="male" className="text-sm">Male</label>
-      <Checkbox id="female" />
-      <label htmlFor="female" className="text-sm">Female</label>
+      <div className="flex items-center space-x-2">
+        <input
+          type="radio"
+          name="gender"
+          value="male"
+          id="male"
+          checked={selectedGender === "male"}
+          onChange={() => onCheckboxChange("male")}
+        />
+        <Label htmlFor="male">Male</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <input
+          type="radio"
+          name="gender"
+          value="female"
+          id="female"
+          checked={selectedGender === "female"}
+          onChange={() => onCheckboxChange("female")}
+        />
+        <Label htmlFor="female">Female</Label>
+      </div>
     </div>
   );
 };
