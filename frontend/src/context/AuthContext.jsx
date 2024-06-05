@@ -30,7 +30,9 @@ export const AuthContextProvider = ({ children }) => {
       }
     };
 
-    refreshAccessToken();
+    if (!Cookies.get('access_token')) {
+      refreshAccessToken();
+    }
   }, [accessToken]);
 
   const checkCookie = Cookies.get('access_token');
