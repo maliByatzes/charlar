@@ -10,8 +10,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import AddFriendCard from "./AddFriendCard";
+import useGetUsers from "@/src/hooks/useGetUsers";
+import { Loader2 } from "lucide-react";
 
 const AddFriend = () => {
+  const { loading, users } = useGetUsers();
+  
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -27,8 +31,14 @@ const AddFriend = () => {
         <div className="flex flex-col gap-2 justify-center">
           <Input type="text" placeholder="johndoe" />
           <ScrollArea className="h-[200px] w-full rounded-md p-4">
-            <AddFriendCard />
-            <AddFriendCard />
+            {users.map((user) => (
+              <AddFriendCard 
+                key={user._id}
+                user={user}  
+              />
+            ))}
+
+            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
           </ScrollArea>
         </div>
       </DialogContent>
