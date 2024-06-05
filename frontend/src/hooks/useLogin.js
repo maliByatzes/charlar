@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
-
+  
   const login = async (email, password) => {
     const success = validateInput(email, password);
     if (!success) return;
@@ -25,9 +25,10 @@ const useLogin = () => {
       }
 
       localStorage.setItem("chat-user", JSON.stringify(data));
-      setAuthUser();
+      setAuthUser(data);
 
       toast.success("Successful login");
+
     } catch (error) {
       toast.error(error.message);
     } finally {

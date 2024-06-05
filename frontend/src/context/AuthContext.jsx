@@ -13,16 +13,32 @@ export const AuthContextProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(Cookies.get('access_token'));
   
   useEffect(() => {
-    const handleCookieChange = () => {
-      // send a server request to access token
+    const refreshAccessToken = async () => {
+      try {
+        const res = await fetch('/api/v1/auth/refresh-token', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await res.json();
+
+        if (data.error) {
+          throw new Error(data.error);
+        }
+      } catch (error) {
+        console.log(error.message); 
+      }
     };
 
-    window.addEventListener('storage', handleCookieChange);
+    refreshAccessToken();
+  }, [accessToken]);
 
-    return () => window.removeEventListener('storage', handleCookieChange);
-  }, []);
+  const checkCookie = Cookies.get('access_token');
+  if (accessToken !== checkCookie) {
+    setAccessToken(checkCookie);
+  }
   
   return (
-    <AuthContext.Provider value={{ accessToken, setAccessToken, authUser, setAuthUser }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ authUser, setAuthUser }}>{children}</AuthContext.Provider>
   );
 };

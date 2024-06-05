@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useLogout from "@/src/hooks/useLogout";
+import { Loader } from "lucide-react";
 
 const Sidebar = () => {
   const { loading, logout } = useLogout();
@@ -55,10 +56,14 @@ const Sidebar = () => {
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer">
-                <LogOut className="mr-2 h-4 w-4" onClick={logout} />
-                <span>Log out</span>
-                <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+              <DropdownMenuItem className="cursor-pointer" onSelect={logout}>
+                {loading ? <Loader className="h-4 w-4 animate-spin" /> : (
+                  <>
+                    <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                  </>
+                )}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
