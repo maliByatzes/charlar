@@ -29,4 +29,4 @@ const useGetUsers = () => {
   return { loading, users };
 };
 
-export default useGetUsers();
+export default useGetUsers;
