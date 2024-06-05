@@ -5,6 +5,7 @@ import GenderCheckbox from "./GenderCheckbox";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useRegister from "@/src/hooks/useRegister";
+import { Loader } from "lucide-react";
 
 const Register = () => {
 
@@ -78,8 +79,9 @@ const Register = () => {
           {"Already have an account?"}
         </Link>
 
-        {/* Remember to set the loading animation */}
-        <Button className="w-full p-2 mt-4">Register</Button>
+        <Button className="w-full p-2 mt-4">
+          {loading ? <Loader className="h-4 w-4 animate-spin" /> : "Register"}
+        </Button>
       </form>
     </div>
   );

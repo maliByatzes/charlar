@@ -24,9 +24,8 @@ const useLogin = () => {
         throw new Error(data.error);
       }
 
-
-      // set data to local storage of "chat-user", set expire time from cookies
-      // setAuthUser with data
+      localStorage.setItem("chat-user", JSON.stringify(data));
+      setAuthUser();
 
       toast.success("Successful login");
     } catch (error) {

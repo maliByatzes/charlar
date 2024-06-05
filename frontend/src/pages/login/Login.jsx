@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useLogin from "@/src/hooks/useLogin";
+import { Loader } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -46,7 +47,9 @@ const Login = () => {
           {"Don't have an account?"}
         </Link>
 
-        <Button className="w-full p-2 mt-4">Login</Button>
+        <Button className="w-full p-2 mt-4">
+          {loading ? <Loader className="w-4 h-4 animate-spin" /> : "Login"} 
+        </Button>
       </form>
     </div>
   );

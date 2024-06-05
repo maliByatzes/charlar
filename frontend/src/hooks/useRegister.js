@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import toast from "react-hot-toast";
+import { useNavigate } from 'react-router-dom';
 
 const useRegister = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const register = async ({ email, username, password, confirmPassword, gender }) => {
     const success = validateInput({ email, username, password, confirmPassword, gender });
@@ -22,10 +24,9 @@ const useRegister = () => {
       if (data.error) {
         throw new Error(data.error);
       }
-
+      
       toast.success("Registration complete, proceed to login");
-
-      // redirect user to "/login" after registration
+      navigate('/login');
     } catch (error) {
       toast.error(error.message);
     } finally {

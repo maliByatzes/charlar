@@ -11,6 +11,7 @@ import { Navigate } from 'react-router-dom';
 
 function App() {
   const { authUser } = useAuthContext();
+  console.log(authUser);
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">

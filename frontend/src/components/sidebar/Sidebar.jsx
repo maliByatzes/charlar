@@ -21,7 +21,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import useLogout from "@/src/hooks/useLogout";
 
 const Sidebar = () => {
-  const { laoding, logout } = useLogout();
+  const { loading, logout } = useLogout();
 
   return (
     <div className="flex flex-col gap-4 w-[350px]">
