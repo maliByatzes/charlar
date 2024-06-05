@@ -11,7 +11,7 @@ import { Navigate } from 'react-router-dom';
 
 function App() {
   const { authUser } = useAuthContext();
-  
+
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen flex items-center justify-center">
