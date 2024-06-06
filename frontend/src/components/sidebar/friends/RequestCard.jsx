@@ -10,19 +10,30 @@ import {
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import useUpdateRequest from "@/src/hooks/useUpdateRequest";
 import { CircleCheck } from "lucide-react";
 import { CircleX } from "lucide-react";
 
-const RequestCard = () => {
+const RequestCard = ({ request }) => {
+  const { loading, updateRequest } = useUpdateRequest();
+  
+  const handleAddClick = async () => {
+    await updateRequest(request._id, "accept");
+  };
+
+  const handleRejectClick = async () => {
+    await updateRequest(request._id, "decline");
+  };
+  
   return (
     <div className="flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer hover:bg-[#27272a]">
       <Avatar>
         <AvatarImage src="" />
-        <AvatarFallback>JD</AvatarFallback>
+        <AvatarFallback>{request.senderId.username[0]}</AvatarFallback>
       </Avatar>
 
       <div className="flex gap-3 justify-between flex-1">
-        <p>John Doe</p>
+        <p>{request.senderId.username}</p>
         <div className="flex gap-2 justify-between pr-2">
           <AlertDialog>
             <AlertDialogTrigger asChild>
@@ -37,7 +48,7 @@ const RequestCard = () => {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction>Continue</AlertDialogAction>
+                <AlertDialogAction onClick={handleAddClick}>Continue</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -54,7 +65,7 @@ const RequestCard = () => {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction>Continue</AlertDialogAction>
+                <AlertDialogAction onClick={handleRejectClick}>Continue</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>

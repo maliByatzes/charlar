@@ -12,16 +12,26 @@ export const sendRequestHandler = async (req, res) => {
       return res.status(401).json({ error: "Cannot send request to yourself" });
     }
 
-    const existingRequest = await Request.findOne({ senderId: user._id, receiverId });
-
+    const existingRequest = await Request.findOne({
+      $or: [
+        { senderId: user._id, receiverId },
+        { senderId: receiverId, receiverId: user._id }
+      ]
+    });
+    
     if (existingRequest) {
       return res.status(400).json({ error: "Request already exists" });
     }
 
-    const existingRequest2 = await Request.findOne({ senderId: receiverId, receiverId: user._id });
+    const existingFriend = await Friend.findOne({
+      $or: [
+        { user1: user._id, user2: receiverId },
+        { user1: receiverId, user2: user._id }
+      ]
+    });
 
-    if (existingRequest2) {
-      return res.status(400).json({ error: "Request already exists" });
+    if (existingFriend) {
+      return res.status(400).json({ error: "You are already friends with this user" });
     }
 
     const newRequest = new Request({
@@ -47,7 +57,10 @@ export const getSentRequests = async (req, res) => {
 
     const user = res.locals.user;
 
-    const requests = await Request.find({ senderId: user._id, status: "pending" });
+    const requests = await Request.find({ senderId: user._id, status: "pending" }).populate({
+      path: "senderId",
+      model: "User"
+    });
 
     return res.status(200).json(requests);
 
@@ -63,7 +76,10 @@ export const getReceivedRequests = async (req, res) => {
 
     const user = res.locals.user;
 
-    const requests = await Request.find({ receiverId: user._id, status: "pending" });
+    const requests = await Request.find({ receiverId: user._id, status: "pending" }).populate({
+      path: "senderId",
+      model: "User"
+    });
 
     return res.status(200).json(requests);
 

@@ -1,13 +1,16 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import RequestCard from "./RequestCard";
 
-const Requests = () => {
+const Requests = ({ requests }) => {
+    
   return (
     <ScrollArea className="flex flex-col gap-2 min-w-md h-[250px]">
-      <RequestCard />
-      <RequestCard />
-      <RequestCard />
-      <RequestCard />
+      {requests.map((r) => (
+        <RequestCard
+          key={r._id}
+          request={r}  
+        />
+      ))}
     </ScrollArea>
   );
 };
