@@ -1,6 +1,9 @@
 import Cookies from "js-cookie";
 import { createContext, useState, useContext, useEffect } from "react";
 
+// WARNING: Authentication is kinda broken
+// TODO: Fix
+
 export const AuthContext = createContext();
 
 // eslint-disable-next-line react-refresh/only-export-components

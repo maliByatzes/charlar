@@ -28,7 +28,6 @@ const AddFriend = () => {
     const filteredItems = users.filter((user) => user.username.toLowerCase().includes(searchItem.toLowerCase()));
 
     setFilteredUsers(filteredItems);
-    setSearchTerm('');
   };
   
   return (

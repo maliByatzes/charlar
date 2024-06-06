@@ -19,7 +19,7 @@ const Friend = () => {
         />
       ) : <p className="text-center">No friends</p>}
 
-      {loading2 ? <Loader2 className="w-8 h-8 animate-spin" /> : null}
+      {/*loading2 ? <Loader2 className="w-8 h-8 animate-spin" /> : null*/}
       <Separator className="my-6" />
       <div className="flex items-center justify-between">
         <h1 className="font-semibold text-center text-lg underline mb-3">Friend requests</h1>
@@ -32,7 +32,7 @@ const Friend = () => {
         />
       ) : <p className="text-center">No friend requests</p>}
 
-      {loading1 ? <Loader2 className="w-8 h-8 animate-spin" /> : null}
+      {/*loading1 ? <Loader2 className="w-8 h-8 animate-spin" /> : null*/}
     </div>
   );
 };
