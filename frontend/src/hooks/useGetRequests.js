@@ -24,7 +24,7 @@ const useGetRequests = () => {
     };
 
     getRequests();
-  }, []);
+  }, [requests]);
 
   return { loading, requests };
 };

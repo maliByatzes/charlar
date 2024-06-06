@@ -10,18 +10,25 @@ import {
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import useRemoveFriend from "@/src/hooks/useRemoveFriend";
 import { Trash2 } from "lucide-react";
 
-const FriendCard = () => {
+const FriendCard = ({ friend, friendId }) => {
+  const { removeFriend } = useRemoveFriend();
+
+  const handleRemoveAction = async () => {
+    await removeFriend(friendId);
+  };
+
   return (
     <div className="flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer hover:bg-[#27272a]">
       <Avatar>
         <AvatarImage src="" />
-        <AvatarFallback>JD</AvatarFallback>
+        <AvatarFallback>{friend.username[0]}</AvatarFallback>
       </Avatar>
 
       <div className="flex gap-3 justify-between flex-1">
-        <p>John Doe</p>
+        <p>{friend.username}</p>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Trash2 />
@@ -35,7 +42,7 @@ const FriendCard = () => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction>Continue</AlertDialogAction>
+              <AlertDialogAction onClick={handleRemoveAction}>Continue</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
