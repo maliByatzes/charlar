@@ -4,7 +4,7 @@ const Message = () => {
   const isSent = false;
   
   return (
-    <div className={`flex items-center mb-4 gap-3 ${isSent ? 'flex-row-reverse justify-end' : 'justify-start'}`}>
+    <div className={`flex items-end mb-4 gap-3 justify-start ${isSent ? 'flex-row-reverse' : ''}`}>
       <Avatar className="">
         <AvatarImage src="" />
         <AvatarFallback>JD</AvatarFallback>
