@@ -7,8 +7,8 @@ const Message = ({ message }) => {
   const { authUser } = useAuthContext();
   const { selectedConversation } = useConversationContext();
   const fromMe = message.senderId === authUser._id;
-  const profilePic = fromMe ? authUser.profilePic : selectedConversation?.participants[0].profilePic;
-  
+  const profilePic = fromMe ? authUser.profilePic : selectedConversation?.profilePic;
+
   return (
     <div className={`flex items-end mb-4 gap-3 justify-start ${fromMe ? 'flex-row-reverse' : ''}`}>
       <Avatar className="">

@@ -9,7 +9,7 @@ const Conversation = ({ conversation }) => {
   return (
     <div
       className={`flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer hover:bg-[#27272a] ${isSelected ? 'bg-[#27272a]' : ''}`}
-      onClick={() => setSelectedConversation(conversation)}
+      onClick={() => setSelectedConversation(conversation.participants[0])}
     >
       <Avatar>
         <AvatarImage src={conversation.participants[0].profilePic} />

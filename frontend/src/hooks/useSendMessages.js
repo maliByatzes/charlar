@@ -9,7 +9,7 @@ const useSendMessages = () => {
   const sendMessage = async (message) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/v1/messages/send/${selectedConversation.participants[0]._id}`, {
+      const res = await fetch(`/api/v1/messages/send/${selectedConversation._id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),

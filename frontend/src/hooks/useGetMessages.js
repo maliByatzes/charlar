@@ -6,12 +6,12 @@ import toast from "react-hot-toast";
 const useGetMessages = () => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessages, selectedConversation } = useConversationContext();
-  
+
   useEffect(() => {
     const getMessages = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/v1/messages/${selectedConversation?.participants[0]._id}`);
+        const res = await fetch(`/api/v1/messages/${selectedConversation?._id}`);
         const data = await res.json();
         if (data.error) {
           throw new Error(data.error);
@@ -23,9 +23,9 @@ const useGetMessages = () => {
         setLoading(false);
       }
     };
-    
-    if (selectedConversation?.participants[0]._id) getMessages();
-  }, [selectedConversation?.participants[0]._id, setMessages]);
+
+    if (selectedConversation?._id) getMessages();
+  }, [selectedConversation?._id, setMessages]);
 
   return { loading, messages };
 };
