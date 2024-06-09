@@ -16,7 +16,7 @@ import { CircleX } from "lucide-react";
 
 const RequestCard = ({ request }) => {
   const { loading, updateRequest } = useUpdateRequest();
-  
+
   const handleAddClick = async () => {
     await updateRequest(request._id, "accept");
   };
@@ -24,11 +24,11 @@ const RequestCard = ({ request }) => {
   const handleRejectClick = async () => {
     await updateRequest(request._id, "decline");
   };
-  
+
   return (
     <div className="flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer hover:bg-[#27272a]">
       <Avatar>
-        <AvatarImage src="" />
+        <AvatarImage src={request.senderId.profilePic} />
         <AvatarFallback>{request.senderId.username[0]}</AvatarFallback>
       </Avatar>
 

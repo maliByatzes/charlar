@@ -13,7 +13,7 @@ const AddFriendCard = ({ user }) => {
   return (
     <div className="flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer hover:bg-[#27272a]">
       <Avatar>
-        <AvatarImage src="" />
+        <AvatarImage src={user.profilePic} />
         <AvatarFallback>{user.username[0]}</AvatarFallback>
       </Avatar>
 

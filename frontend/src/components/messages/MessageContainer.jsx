@@ -1,20 +1,28 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Messages from "./Messages";
 import MessageInput from "./MessageInput";
+import { useConversationContext } from "@/src/context/ConversationContext";
+import { useAuthContext } from "@/src/context/AuthContext";
+import { useEffect } from "react";
 
 const MessageContainer = () => {
-  const isChatSelected = false; //temporary condition
+  const { selectedConversation, setSelectedConversation } = useConversationContext();
+  const { authUser } = useAuthContext();
+
+  useEffect(() => {
+    return () => setSelectedConversation(null);
+  }, [setSelectedConversation]);
 
   return (
     <div className="flex flex-col w-full">
-      {isChatSelected ? <NoChatSelected /> : (
+      {!selectedConversation ? <NoChatSelected user={authUser} /> : (
         <>
           <div className="flex items-center gap-3 px-4 py-2 mb-2">
             <Avatar>
-              <AvatarImage src="" />
-              <AvatarFallback>JD</AvatarFallback>
+              <AvatarImage src={selectedConversation?.participants[0].profilePic} />
+              <AvatarFallback>{selectedConversation?.participants[0].username[0]}</AvatarFallback>
             </Avatar>
-            <p className="font-bold">John Doe</p>
+            <p className="font-bold">{selectedConversation?.participants[0].username}</p>
           </div>
 
           <Messages />
@@ -25,11 +33,11 @@ const MessageContainer = () => {
   );
 };
 
-const NoChatSelected = () => {
+const NoChatSelected = ({ user }) => {
   return (
     <div className="flex items-center justify-center w-full h-full">
       <div className="px-4 text-center font-semibold flex flex-col items-center gap-2">
-        <p>Welcome John Doe</p>
+        <p>{`Welcome ${user.username}`}</p>
         <p>Select a friend to start messaging</p>
       </div>
     </div>
