@@ -24,7 +24,7 @@ const useGetUsers = () => {
     };
 
     getUsers();
-  }, []);
+  }, [users]);
 
   return { loading, users };
 };
