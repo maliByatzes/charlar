@@ -1,9 +1,6 @@
 import Cookies from "js-cookie";
 import { createContext, useState, useContext, useEffect } from "react";
 
-// WARNING: Authentication is kinda broken
-// TODO: Fix
-
 export const AuthContext = createContext();
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -33,13 +30,16 @@ export const AuthContextProvider = ({ children }) => {
       }
     };
 
-    if (!Cookies.get('access_token')) {
+    if (!Cookies.get('access_token') && Cookies.get('refresh_token')) {
       refreshAccessToken();
+    } else if (!Cookies.get('access_token') && !Cookies.get('refresh_token')) {
+      localStorage.removeItem('chat-user');
+      setAuthUser(null);
     }
   }, [accessToken]);
 
   const checkCookie = Cookies.get('access_token');
-  if (accessToken !== checkCookie) {
+  if (checkCookie && accessToken !== checkCookie) {
     setAccessToken(checkCookie);
   }
   
