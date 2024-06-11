@@ -18,7 +18,7 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("http://localhost:8000", {
+      const socket = io("https://charlar.onrender.com/", {
         query: {
           userId: authUser._id
         },
@@ -28,7 +28,7 @@ export const SocketContextProvider = ({ children }) => {
       socket.on('getOnlineUsers', (users) => {
         setOnlineUsers(users);
       });
-      
+
       return () => socket.close();
     } else {
       if (socket) {
