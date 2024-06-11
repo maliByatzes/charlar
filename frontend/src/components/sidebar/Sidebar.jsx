@@ -20,9 +20,11 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useLogout from "@/src/hooks/useLogout";
 import { Loader } from "lucide-react";
+import { useAuthContext } from "@/src/context/AuthContext";
 
 const Sidebar = () => {
   const { loading, logout } = useLogout();
+  const { authUser } = useAuthContext();
 
   return (
     <div className="flex flex-col gap-4 w-[350px]">
@@ -36,8 +38,8 @@ const Sidebar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="w-10 h-10 cursor-pointer mr-3">
-                <AvatarImage src="" />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarImage src={authUser.profilePic} />
+                <AvatarFallback>{authUser.username[0]}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="end">

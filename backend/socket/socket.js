@@ -6,7 +6,6 @@ const app = express();
 
 const server = http.createServer(app);
 
-const userSocketMap = {};
 
 const io = new Server(server, {
   cors: {
@@ -15,11 +14,17 @@ const io = new Server(server, {
   },
 });
 
+const userSocketMap = {};
+
+export const getReceiverSocketId = (receiverId) => {
+  return userSocketMap[receiverId];
+};
+
 io.on("connection", (socket) => {
   console.log("a user connected:", socket.id);
 
   const userId = socket.handshake.query.userId;
-  if (userId !== undefined) {
+  if (userId !== "undefined") {
     userSocketMap[userId] = socket.id;
   }
 
@@ -27,7 +32,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("user disconnected:", socket.id);
-    delete userSocketMap[socket.id];
+    delete userSocketMap[userId];
     io.emit('getOnlineUsers', Object.keys(userSocketMap));
   });
 });
