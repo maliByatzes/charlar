@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv';
 import pino from 'pino-http';
@@ -17,6 +18,8 @@ dotenv.config();
 
 const PORT = process.env.PORT || 8000;
 
+const __dirname = path.resolve();
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -30,9 +33,16 @@ app.use('/api/v1/requests', requestRoutes);
 app.use('/api/v1/friends', friendRoutes);
 app.use('/api/v1/messages', messageRoutes);
 
+app.use(express.static(path.join(__dirname, '/frontend/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
+
+/*
 app.all('*', (req, res) => {
   res.status(404).json({ message: `Route ${req.originalUrl} not found` });
-});
+});*/
 
 server.listen(PORT, () => {
   connectToMongoDB();
