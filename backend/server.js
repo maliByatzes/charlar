@@ -11,9 +11,9 @@ import requestRoutes from './routes/request.routes.js';
 import userRoutes from './routes/user.routes.js';
 import friendRoutes from './routes/friend.routes.js';
 import messageRoutes from './routes/message.routes.js';
+import { app, server } from './socket/socket.js';
 
 dotenv.config();
-const app = express();
 
 const PORT = process.env.PORT || 8000;
 
@@ -34,7 +34,7 @@ app.all('*', (req, res) => {
   res.status(404).json({ message: `Route ${req.originalUrl} not found` });
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   connectToMongoDB();
   logger.info(`Server started on port ${PORT}`);
 });

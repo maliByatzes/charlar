@@ -1,10 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useConversationContext } from "@/src/context/ConversationContext";
+import { useSocketContext } from "@/src/context/SocketContext";
 
 const Conversation = ({ conversation }) => {
   const { selectedConversation, setSelectedConversation } = useConversationContext();
 
-  const isSelected = selectedConversation?._id === conversation._id;
+  const isSelected = selectedConversation?._id === conversation.participants[0]._id;
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers.includes(conversation.participants[0]._id);
 
   return (
     <div
@@ -16,9 +19,11 @@ const Conversation = ({ conversation }) => {
         <AvatarFallback>{conversation.participants[0].username[0]}</AvatarFallback>
       </Avatar>
 
-      <div className="flex">
+      <div className="flex flex-1">
         <p>{conversation.participants[0].username}</p>
       </div>
+
+      <div className={`h-2 w-2 rounded-full ${isOnline ? 'bg-green-500': 'bg-transparent'}`}></div>
     </div>
   );
 };
