@@ -26,6 +26,14 @@ A full-stack chat application built using MERN stack.
 
 Visit [here](https://charlar.onrender.com/) to access the application.
 
+## Todo
+
+- [ ] Fix authentication issue.
+- [ ] Fix the user search bug.
+- [ ] Add search bar to search conversations.
+- [ ] Clean up the messages UI.
+- [ ] Add rooms feature to the application.
+
 ## License
 
 This project is licensed under the MIT License.
