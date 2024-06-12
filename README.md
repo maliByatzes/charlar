@@ -31,6 +31,8 @@ Visit [here](https://charlar.onrender.com/) to access the application.
 - [ ] Fix authentication issue.
 - [ ] Fix the user search bug.
 - [ ] Add search bar to search conversations.
+- [ ] Add user profile feauture.
+- [ ] Add dark/light mode toggle.
 - [ ] Clean up the messages UI.
 - [ ] Add rooms feature to the application.
 
