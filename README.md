@@ -33,6 +33,7 @@ Visit [here](https://charlar.onrender.com/) to access the application.
 - [ ] Add search bar to search conversations.
 - [ ] Add user profile feauture.
 - [ ] Add dark/light mode toggle.
+- [ ] Make the UI responsive to different screen sizes.
 - [ ] Clean up the messages UI.
 - [ ] Add rooms feature to the application.
 
