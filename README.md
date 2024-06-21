@@ -26,16 +26,18 @@ A full-stack chat application built using MERN stack.
 
 Visit [here](https://charlar.onrender.com/) to access the application.
 
+**NOTE**: The application is hosted on Render free tier therefore it may take some time to load.
+
 ## Todo
 
 - [ ] Fix authentication issue.
 - [ ] Fix the user search bug.
 - [ ] Add search bar to search conversations.
 - [ ] Add user profile feauture.
-- [ ] Add dark/light mode toggle.
 - [ ] Make the UI responsive to different screen sizes.
 - [ ] Clean up the messages UI.
 - [ ] Add rooms feature to the application.
+- [x] ~~Add dark/light mode toggle.~~
 
 ## License
 

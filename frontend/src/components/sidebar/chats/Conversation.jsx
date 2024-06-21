@@ -1,17 +1,22 @@
+import { useTheme } from "@/components/theme-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useConversationContext } from "@/src/context/ConversationContext";
 import { useSocketContext } from "@/src/context/SocketContext";
 
 const Conversation = ({ conversation }) => {
+  const { theme } = useTheme();
   const { selectedConversation, setSelectedConversation } = useConversationContext();
 
   const isSelected = selectedConversation?._id === conversation.participants[0]._id;
   const { onlineUsers } = useSocketContext();
   const isOnline = onlineUsers.includes(conversation.participants[0]._id);
 
+  const selectedHoverClass = theme === 'dark' ? 'hover:bg-[#27272a]' : 'hover:bg-[#f9fafb]';
+  const selectedClass = theme === 'dark' ? 'bg-[#27272a]' : 'bg-[#f9fafb]';
+
   return (
     <div
-      className={`flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer hover:bg-[#27272a] ${isSelected ? 'bg-[#27272a]' : ''}`}
+      className={`flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer ${selectedHoverClass} ${isSelected ? selectedClass : ''}`}
       onClick={() => setSelectedConversation(conversation.participants[0])}
     >
       <Avatar>

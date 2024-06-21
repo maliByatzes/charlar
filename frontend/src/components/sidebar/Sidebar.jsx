@@ -21,6 +21,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import useLogout from "@/src/hooks/useLogout";
 import { Loader } from "lucide-react";
 import { useAuthContext } from "@/src/context/AuthContext";
+import { ModeToggle } from "@/components/mode-toggle";
 
 const Sidebar = () => {
   const { loading, logout } = useLogout();
@@ -69,6 +70,8 @@ const Sidebar = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+
+          <ModeToggle />
         </div>
 
         <TabsContent value="chats">

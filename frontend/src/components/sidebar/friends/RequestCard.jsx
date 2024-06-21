@@ -1,3 +1,4 @@
+import { useTheme } from "@/components/theme-provider";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,6 +17,9 @@ import { CircleX } from "lucide-react";
 
 const RequestCard = ({ request }) => {
   const { loading, updateRequest } = useUpdateRequest();
+  const { theme } = useTheme();
+
+  const selectedHoverClass = theme === 'dark' ? 'hover:bg-[#27272a]' : 'hover:bg-[#f9fafb]';
 
   const handleAddClick = async () => {
     await updateRequest(request._id, "accept");
@@ -26,7 +30,7 @@ const RequestCard = ({ request }) => {
   };
 
   return (
-    <div className="flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer hover:bg-[#27272a]">
+    <div className={`flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer ${selectedHoverClass}`}>
       <Avatar>
         <AvatarImage src={request.senderId.profilePic} />
         <AvatarFallback>{request.senderId.username[0]}</AvatarFallback>

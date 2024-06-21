@@ -1,3 +1,4 @@
+import { useTheme } from "@/components/theme-provider";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,10 +16,14 @@ import useRemoveFriend from "@/src/hooks/useRemoveFriend";
 import { Trash2 } from "lucide-react";
 
 const FriendCard = ({ friend, friendId }) => {
+  const { theme } = useTheme();
   const { removeFriend } = useRemoveFriend();
   const { selectedConversation, setSelectedConversation } = useConversationContext();
 
   const isSelected = selectedConversation?._id === friend._id;
+
+  const selectedHoverClass = theme === 'dark' ? 'hover:bg-[#27272a]' : 'hover:bg-[#f9fafb]';
+  const selectedClass = theme === 'dark' ? 'bg-[#27272a]' : 'bg-[#f9fafb]';
 
   const handleRemoveAction = async () => {
     await removeFriend(friendId);
@@ -26,7 +31,7 @@ const FriendCard = ({ friend, friendId }) => {
 
   return (
     <div
-      className={`flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer hover:bg-[#27272a] ${isSelected ? 'bg-[#27272a]' : ''}`}
+      className={`flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer ${selectedHoverClass} ${isSelected ? selectedClass : ''}`}
       onClick={() => setSelectedConversation(friend)}
     >
       <Avatar>

@@ -1,3 +1,4 @@
+import { useTheme } from "@/components/theme-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useSendRequest from "@/src/hooks/useSendRequest";
 import { Loader } from "lucide-react";
@@ -5,13 +6,16 @@ import { PlusCircle } from "lucide-react";
 
 const AddFriendCard = ({ user }) => {
   const { loading, sendRequest } = useSendRequest();
+  const { theme } = useTheme();
+
+  const selectedHoverClass = theme === 'dark' ? 'hover:bg-[#27272a]' : 'hover:bg-[#f9fafb]';
 
   const handleClick = async (userId) => {
     await sendRequest(userId);
   };
 
   return (
-    <div className="flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer hover:bg-[#27272a]">
+    <div className={`flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer ${selectedHoverClass}`}>
       <Avatar>
         <AvatarImage src={user.profilePic} />
         <AvatarFallback>{user.username[0]}</AvatarFallback>
