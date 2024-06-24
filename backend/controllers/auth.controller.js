@@ -57,10 +57,15 @@ export const loginHandler = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
     const isMatch = await argon2.verify(user.password, password);
 
-    if (!user || !isMatch) {
-      return res.status(401).json({ error: "Invalid email or password" });
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
     await Promise.all([
