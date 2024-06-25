@@ -21,7 +21,7 @@ const Conversation = ({ conversation }) => {
     >
       <Avatar>
         <AvatarImage src={conversation.participants[0].profilePic} />
-        <AvatarFallback>{conversation.participants[0].username[0]}</AvatarFallback>
+        <AvatarFallback>{conversation.participants[0].username[0].toUpperCase()}</AvatarFallback>
       </Avatar>
 
       <div className="flex flex-1">

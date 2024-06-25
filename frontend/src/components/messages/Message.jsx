@@ -17,7 +17,7 @@ const Message = ({ message }) => {
     <div className={`flex items-end mb-4 gap-3 justify-start ${fromMe ? 'flex-row-reverse' : ''}`}>
       <Avatar className="">
         <AvatarImage src={profilePic} />
-        <AvatarFallback>u</AvatarFallback>
+        <AvatarFallback>{authUser.username[0].toUpperCase()}</AvatarFallback>
       </Avatar>
       <div className={`relative p-3 rounded-lg max-w-xs break-words ${messageBgClass}`}>
         {message.message}

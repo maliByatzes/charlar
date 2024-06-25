@@ -36,7 +36,7 @@ const FriendCard = ({ friend, friendId }) => {
     >
       <Avatar>
         <AvatarImage src={friend.profilePic} />
-        <AvatarFallback>{friend.username[0]}</AvatarFallback>
+        <AvatarFallback>{friend.username[0].toUpperCase()}</AvatarFallback>
       </Avatar>
 
       <div className="flex gap-3 justify-between flex-1">

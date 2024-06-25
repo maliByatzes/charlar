@@ -18,7 +18,7 @@ const AddFriendCard = ({ user }) => {
     <div className={`flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer ${selectedHoverClass}`}>
       <Avatar>
         <AvatarImage src={user.profilePic} />
-        <AvatarFallback>{user.username[0]}</AvatarFallback>
+        <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
       </Avatar>
 
       <div className="flex gap-3 justify-between flex-1">

@@ -20,7 +20,7 @@ const MessageContainer = () => {
           <div className="flex items-center gap-3 px-4 py-2 mb-2">
             <Avatar>
               <AvatarImage src={selectedConversation?.profilePic} />
-              <AvatarFallback>{selectedConversation?.username[0]}</AvatarFallback>
+              <AvatarFallback>{selectedConversation?.username[0].toUpperCase()}</AvatarFallback>
             </Avatar>
             <p className="font-bold">{selectedConversation?.username}</p>
           </div>

@@ -33,7 +33,7 @@ const RequestCard = ({ request }) => {
     <div className={`flex rounded-lg gap-4 px-2 py-4 items-center cursor-pointer ${selectedHoverClass}`}>
       <Avatar>
         <AvatarImage src={request.senderId.profilePic} />
-        <AvatarFallback>{request.senderId.username[0]}</AvatarFallback>
+        <AvatarFallback>{request.senderId.username[0].toUpperCase()}</AvatarFallback>
       </Avatar>
 
       <div className="flex gap-3 justify-between flex-1">
