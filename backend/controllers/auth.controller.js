@@ -104,7 +104,7 @@ export const refreshTokenHandler = async (req, res) => {
     const refreshToken = req.cookies.refresh_token;
 
     if (!refreshToken) {
-      return res.status(403).json({ error: "Unauthorized - No access token" });
+      return res.status(403).json({ error: "Unauthorized - No refresh token" });
     }
 
     const userId = await verifyToken(refreshToken);
