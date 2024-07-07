@@ -110,7 +110,7 @@ export const refreshTokenHandler = async (req, res) => {
     const userId = await verifyToken(refreshToken);
 
     if (!userId) {
-      return res.status(403).json({ error: "Unauthorized - Invalid access token" });
+      return res.status(403).json({ error: "Unauthorized - Invalid refresh token" });
     }
 
     const user = await User.findById(userId);
